@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# 1. Remove .php extension
+# If the user types /dashboard, look for dashboard.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# 2. (Optional) Redirect from pages/admin/ to a shorter path
+# This allows you to use: localhost/Project/Qtrace/admin-dashboard
+RewriteRule ^dashboard$ pages/admin/dashboard.php [NC,L]
+RewriteRule ^project-list$ pages/admin/project_list.php [NC,L]
+RewriteRule ^project-map$ pages/admin/project_map.php [NC,L]
+RewriteRule ^add-project$ pages/admin/add_project.php [NC,L]
+RewriteRule ^contractor-list$ pages/admin/contractor_list.php [NC,L]
+RewriteRule ^add-contractor$ pages/admin/add_contractor.php [NC,L]
+RewriteRule ^engineer-list$ pages/admin/engineer_list.php [NC,L]
+RewriteRule ^add-engineer$ pages/admin/add_engineer.php [NC,L]
+RewriteRule ^history$ pages/admin/history.php [NC,L]
+RewriteRule ^reports$ pages/admin/reports.php [NC,L]

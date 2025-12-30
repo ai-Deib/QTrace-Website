@@ -9,12 +9,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="QTrace is the official Quezon City Transparency Platform, enabling citizens to track government projects, monitor progress, and report issues for greater accountability.">
         <meta name="author" content="Confractus">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="">
         <title>QTrace - Quezon City Transparency Platform</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/Project/Qtrace/assets/css/styles.css">
     </head>
     <body>
         

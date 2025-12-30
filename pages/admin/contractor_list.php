@@ -1,4 +1,4 @@
-<?php $current_page = 'projectMap'; ?>
+<?php $current_page = 'contractorList'; ?>
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
