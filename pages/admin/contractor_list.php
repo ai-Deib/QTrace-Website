@@ -47,7 +47,7 @@
                         <!-- Breadcrumb -->
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                            <a href="/Project/Qtrace/dashboard">Home</a>
+                            <a href="/QTrace-Website/dashboard">Home</a>
                             </li>
                             <li class="breadcrumb-item active">Contractor List</li>
                         </ol>
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="col-md-3 d-flex align-items-end row g-2">
                                         <div class="col-6">
-                                            <button class="btn bg-color-primary text-light fw-medium w-100" type="submit">Apply Filters</button>
+                                            <button class="btn bg-color-primary text-light fw-medium w-100" type="submit">Apply</button>
                                         </div>
                                         <div class="col-6">
                                             <button type="reset" class="btn btn-outline-secondary w-100 fw-medium">Reset</button>

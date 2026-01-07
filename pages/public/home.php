@@ -6,10 +6,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- SEO -->
-    <meta name="description" content="Register a new contractor in the QTRACE system."/>
+    <meta name="description" content="Welcome to QTRACE, Quezon City's official platform for monitoring government projects and ensuring transparency."/>
     <meta name="author" content="Confractus" />
     <link rel="icon" type="image/png" sizes="16x16" href="" />
-    <title>QTrace - Add New Contractor</title>
+    <title>QTrace - Home</title>
     <!-- Bootstrap CSS Link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Basta need toh-->
@@ -20,7 +20,7 @@
     <style>
       /* Image Preview Box */
         .hero-section {
-            background: linear-gradient(rgba(0, 74, 153, 0.9), rgba(0, 74, 153, 0.8)), 
+            background: linear-gradient(rgba(26, 57, 91, 0.9), rgba(31, 57, 85, 0.8)), 
                 url('/QTrace-Website/assets/image/Hero-Bg.jpg');
             background-repeat: no-repeat;
             background-position: center center;
@@ -45,7 +45,7 @@
             height: 100%;
         }
         .badge-qc {
-            background-color: #ffcc00;
+            background-color: var(--accent);
             color: #333;
             border-radius: 50px;
         }
@@ -129,67 +129,136 @@
                 </div>
 
                 <div class="container">
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <div class=" p-4">
-                            <div class="align-items-center">
-                                <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
-                                    <i class="bi bi-people text-light fs-3"></i>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class=" p-4">
+                                <div class="align-items-center">
+                                    <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
+                                        <i class="bi bi-people text-light fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-6 mb-1">Register with QC ID</h3>
+                                        <p class="text-muted small mb-0 fs-8">Verify your identity as a Quezon City resident using your official QC ID number</p>
+                                    </div>
+                                    
                                 </div>
-                                <div>
-                                    <h3 class="fw-medium mb-0 fs-6 mb-1">Register with QC ID</h3>
-                                    <p class="text-muted small mb-0 fs-8">Verify your identity as a Quezon City resident using your official QC ID number</p>
-                                </div>
-                                
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class=" p-4">
-                            <div class="align-items-center">
-                                <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
-                                    <i class="bi bi-eye text-light fs-3"></i>
+
+                        <div class="col-md-3">
+                            <div class=" p-4">
+                                <div class="align-items-center">
+                                    <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
+                                        <i class="bi bi-eye text-light fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-6 mb-1">View Projects</h3>
+                                        <p class="text-muted small mb-0 fs-8">Browse the interactive map to see all ongoing and planned projects in your area</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 class="fw-medium mb-0 fs-6 mb-1">View Projects</h3>
-                                    <p class="text-muted small mb-0 fs-8">Browse the interactive map to see all ongoing and planned projects in your area</p>
-                                </div>
-                                
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class=" p-4">
-                            <div class="align-items-center">
-                                <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
-                                    <i class="bi bi-file-check text-light fs-3"></i>
+
+                        <div class="col-md-3">
+                            <div class=" p-4">
+                                <div class="align-items-center">
+                                    <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
+                                        <i class="bi bi-file-check text-light fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-6 mb-1">Monitor Progress</h3>
+                                        <p class="text-muted small mb-0 fs-8">Check project timelines, budgets, documents, and real-time photo updates</p>
+                                    </div>
+                                    
                                 </div>
-                                <div>
-                                    <h3 class="fw-medium mb-0 fs-6 mb-1">Monitor Progress</h3>
-                                    <p class="text-muted small mb-0 fs-8">Check project timelines, budgets, documents, and real-time photo updates</p>
-                                </div>
-                                
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class=" p-4">
-                            <div class="align-items-center">
-                                <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
-                                    <i class="bi bi-shield text-light fs-3"></i>
+                        
+                        <div class="col-md-3">
+                            <div class=" p-4">
+                                <div class="align-items-center">
+                                    <div class="py-3 px-4 rounded-circle bg-color-primary shadow-sm mb-3 d-inline-block">
+                                        <i class="bi bi-shield text-light fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-6 mb-1">Report Issues</h3>
+                                        <p class="text-muted small mb-0 fs-8">Found a problem? Submit a report with photos and get official responses</p>
+                                    </div>
+                                    
                                 </div>
-                                <div>
-                                    <h3 class="fw-medium mb-0 fs-6 mb-1">Report Issues</h3>
-                                    <p class="text-muted small mb-0 fs-8">Found a problem? Submit a report with photos and get official responses</p>
-                                </div>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <section class="container text-center py-5 mt-4">
+                <div class="card bg-color-primary text-light py-4 rounded-5" style="width: 100%;margin:auto;">
+                    <div class="card-body p-5">
+                        <div class="title-section mb-1 py-4 px-5">
+                            <h2 class="fw-bold fs-3 mb-3">Start Exploring Public Projects</h2>
+                            <p class="fs-6">View our interactive map to see what's happening in your barangay. All project data is updated in real-time by city officials.</p>
+                        </div>
+                        <div class="d-grid d-md-flex justify-content-md-center gap-3 gap-md-5">
+                            <button class="btn px-5 py-2 fw-bold text-white" style="background-color: var(--accent) !important;">
+                                Explore Project Map
+                            </button>
+                            <button class="btn btn-light border px-5 py-2 fw-bold">
+                                Sign In with QC ID
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+            </section>
+
+            <section class="container text-center py-5 mt-4">
+                <div class="title-section mb-4">
+                    <h2 class="fw-bold">Platform Features</h2>
+                </div>
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card stat-card py-4 px-3">
+                                <div class="text-start">
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-5 mb-2">Real-Time Updates</h3>
+                                        <p class="text-muted small mb-0 fs-8">Track project progress with live photo uploads, milestone completions, and status changes.</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card stat-card py-4 px-3">
+                                <div class="text-start">
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-5 mb-2">Document Transparency</h3>
+                                        <p class="text-muted small mb-0 fs-8">Access all public documents including contracts, permits, and environmental clearances.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card stat-card py-4 px-3">
+                                <div class="text-start">
+                                    <div>
+                                        <h3 class="fw-medium mb-0 fs-5 mb-2">Citizen Participation</h3>
+                                        <p class="text-muted small mb-0 fs-8">Report issues, provide feedback, and receive official responses from city administrators.</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
             </section>
         </main>
+        <?php
+            include('../../components/footer.php');
+        ?>
         
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
