@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2026 at 08:23 AM
+-- Generation Time: Jan 09, 2026 at 08:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -87,24 +87,6 @@ CREATE TABLE `contractor_table` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `map_table`
---
-
-CREATE TABLE `map_table` (
-  `Map_ID` int(11) NOT NULL,
-  `Project_ID` int(11) NOT NULL,
-  `Address` varchar(255) NOT NULL,
-  `District_Number` int(11) NOT NULL,
-  `Barangay` varchar(255) NOT NULL,
-  `Budget` double NOT NULL,
-  `Category` enum('Infrastructure','Education','Healthcare') NOT NULL,
-  `Latitude` int(11) NOT NULL,
-  `Longitude` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `projectmilestone_table`
 --
 
@@ -143,9 +125,8 @@ CREATE TABLE `projects_table` (
   `Contractor_ID` int(11) NOT NULL,
   `Project_Title` varchar(50) NOT NULL,
   `Project_Description` varchar(255) NOT NULL,
-  `Project_Status` enum('Planned','Ongoing','Delayed','Completed') DEFAULT NULL,
-  `Project_Longitude` int(11) NOT NULL,
-  `project_Latitude` int(11) NOT NULL,
+  `Project_Status` varchar(50) NOT NULL,
+  `Project_LatitudeAndLongitude` varchar(20) NOT NULL,
   `Project_Budget` double NOT NULL,
   `Project_StartedDate` date DEFAULT NULL,
   `Project_EndDate` date DEFAULT NULL,
@@ -185,18 +166,25 @@ CREATE TABLE `user_table` (
   `user_middleName` varchar(20) DEFAULT NULL,
   `user_Email` varchar(20) NOT NULL,
   `user_Password` varchar(20) NOT NULL,
-  `user_Role` enum('citizen','admin','super admin') NOT NULL
+  `user_Role` enum('citizen','admin') NOT NULL,
+  `user_birthDate` date NOT NULL,
+  `user_sex` enum('female','male','other') NOT NULL,
+  `user_contactInformation` bigint(20) NOT NULL,
+  `user_address` varchar(100) NOT NULL,
+  `created_At` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_table`
+--
+
+INSERT INTO `user_table` (`user_ID`, `QC_ID_Number`, `user_lastName`, `user_firstName`, `user_middleName`, `user_Email`, `user_Password`, `user_Role`, `user_birthDate`, `user_sex`, `user_contactInformation`, `user_address`, `created_At`) VALUES
+(1, 0, 'Manongdo', 'Gerald', 'Pavillon', 'ipoglang@gmail.com', '$2y$10$hr0Tc0IEObKIR', 'admin', '2005-09-12', 'male', 9082938218, 'blk 51 lt 49 noche buena st. ', '2026-01-09'),
+(2, 2147483647, 'Clifford', 'Kurt', 'Eyong', 'TEst1@gmail.com', '$2y$10$xYxJX5HeB.Bm3', 'citizen', '2007-09-12', 'other', 12312312, 'blk 51 lt 49 noche buena st. ', '2026-01-09');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `account_table`
---
-ALTER TABLE `account_table`
-  ADD PRIMARY KEY (`Account_Id`);
 
 --
 -- Indexes for table `contractor_documents_table`
@@ -217,13 +205,6 @@ ALTER TABLE `contractor_expertise_table`
 --
 ALTER TABLE `contractor_table`
   ADD PRIMARY KEY (`Contractor_Id`);
-
---
--- Indexes for table `map_table`
---
-ALTER TABLE `map_table`
-  ADD PRIMARY KEY (`Map_ID`),
-  ADD KEY `fk_map_projects` (`Project_ID`);
 
 --
 -- Indexes for table `projectmilestone_table`
@@ -265,28 +246,28 @@ ALTER TABLE `user_table`
 --
 
 --
--- AUTO_INCREMENT for table `account_table`
---
-ALTER TABLE `account_table`
-  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `contractor_expertise_table`
 --
 ALTER TABLE `contractor_expertise_table`
-  MODIFY `Contractor_Expertise_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Contractor_Expertise_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contractor_table`
 --
 ALTER TABLE `contractor_table`
-  MODIFY `Contractor_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Contractor_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `report_table`
 --
 ALTER TABLE `report_table`
   MODIFY `report_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_table`
+--
+ALTER TABLE `user_table`
+  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -304,12 +285,6 @@ ALTER TABLE `contractor_documents_table`
 ALTER TABLE `contractor_expertise_table`
   ADD CONSTRAINT `fk_document_contractor` FOREIGN KEY (`Contractor_Id`) REFERENCES `contractor_table` (`Contractor_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_expertise_contractor` FOREIGN KEY (`Contractor_Id`) REFERENCES `contractor_table` (`Contractor_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `map_table`
---
-ALTER TABLE `map_table`
-  ADD CONSTRAINT `map_table_ibfk_1` FOREIGN KEY (`Project_ID`) REFERENCES `projects_table` (`Project_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `projectmilestone_table`
