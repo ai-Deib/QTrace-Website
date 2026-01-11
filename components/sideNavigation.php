@@ -148,10 +148,11 @@
 
     <hr>
     <div class="dropdown">
-        <a href="#" class="btn w-100 d-flex text-black" >
+        <a href="/QTrace-Website/logout" class="btn w-100 d-flex text-black" >
             <i class="bi bi-box-arrow-in-right me-2"></i>
-            Login
+            Logout
         </a>
     </div>
         </nav>
    
+

@@ -104,6 +104,12 @@
                         </select>
                       </div>
                     </div>
+                    <div class="row mb-2">
+                      <div class="col-md-12">
+                        <label class="form-label fw-medium color-black" for="password">Password</label>
+                        <input type="password" class="form-control" name="defaultpassword" placeholder="Enter password" required />
+                      </div>
+                    </div>
                   </div>
 
                   <div class="mb-4">

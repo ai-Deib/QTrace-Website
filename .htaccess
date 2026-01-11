@@ -24,6 +24,9 @@ RewriteRule ^reports$ pages/admin/reports.php [NC,L]
 RewriteRule ^add-account$ pages/admin/add_account.php [NC,L]
 RewriteRule ^account-list$ pages/admin/account_list.php [NC,L]
 
+RewriteRule ^login$ pages/admin/login.php [NC,L]
+RewriteRule ^logout$ pages/admin/logout.php [NC,L]
+
 #For Public pages
 RewriteRule ^home$ pages/public/home.php [NC,L]
 RewriteRule ^projects$ pages/public/project.php [NC,L]

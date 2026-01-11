@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact_number = $_POST['contact_number'];
     $email          = $_POST['email'];
     $main_address   = $_POST['main_address'];
-    $password       = password_hash("defaultpassword", PASSWORD_BCRYPT);
+    $password       = $_POST['defaultpassword'];
+    // $password       = password_hash("defaultpassword", PASSWORD_BCRYPT);
 
     // 2. Generate 11-digit Unique QC ID
     $isUnique = false;
