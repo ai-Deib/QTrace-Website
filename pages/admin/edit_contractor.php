@@ -282,7 +282,7 @@
     </script>
          
     <!-- Reusable Script -->
-     <script src="/QTrace-Website/assets/js/mouseMovement.js"></script>
+    <script src="/QTrace-Website/assets/js/mouseMovement.js"></script>
     <script src="/QTrace-Website/assets/js/imageholder.js"></script>
     <script src="/QTrace-Website/assets/js/dynamicFieldText.js"></script>
     <script src="/QTrace-Website/assets/js/dynamicFieldFile.js"></script>
