@@ -43,6 +43,9 @@ if ($statusStmt) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <!-- General Css Link -->
     <link rel="stylesheet" href="/QTrace-Website/assets/css/styles.css" />
   </head>
@@ -138,15 +141,48 @@ if ($statusStmt) {
                   <div class="row g-3 mb-4">
                     <legend>Location</legend>
                     <hr class="m-1" />
-                    <!-- TODO: Replace with map-based location picker
                     <div class="col-md-12 mb-4">
-                      <label for="location_id" class="form-label fw-medium color-black">Project Location</label>
-                      <select class="form-select" name="location_ID" id="location_id" required>
-                        <option value="" selected disabled>Select Location</option>
-                        <!-- Options will be populated dynamically -->
-                    <!--  </select>
+                      <label for="locationPickerMap" class="form-label fw-medium color-black">Select Project Location</label>
+                      <p class="text-muted small">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Click existing markers to select a saved location<br>
+                        <i class="bi bi-pin-map-fill text-warning"></i> Click anywhere on the map to drop a custom location pin
+                      </p>
+                      <div id="locationPickerMap" style="width: 100%; height: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+                      <div id="selectedLocationDisplay" class="mt-3"></div>
+                      
+                      <!-- Hidden fields for location -->
+                      <input type="hidden" name="location_ID" id="location_id_value" />
+                      <input type="hidden" id="custom_latitude" />
+                      <input type="hidden" id="custom_longitude" />
+                      
+                      <!-- Custom Location Form (shown when user drops a pin) -->
+                      <div id="customLocationForm" style="display: none;" class="mt-3 p-3 border rounded bg-light">
+                        <h6 class="mb-3"><i class="bi bi-pin-map"></i> Custom Location Details</h6>
+                        <div class="row g-3">
+                          <div class="col-md-12">
+                            <label for="custom_address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="custom_address" placeholder="e.g., 123 Main Street">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="custom_barangay" class="form-label">Barangay</label>
+                            <input type="text" class="form-control" id="custom_barangay" placeholder="e.g., Batasan Hills">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="custom_district" class="form-label">District Number</label>
+                            <input type="number" class="form-control" id="custom_district" placeholder="e.g., 2" min="1" max="6">
+                          </div>
+                          <div class="col-12">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="saveCustomLocation()">
+                              <i class="bi bi-save"></i> Save Location
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <button type="button" class="btn btn-sm btn-outline-secondary mt-2" onclick="clearLocationSelection()">
+                        <i class="bi bi-x-circle"></i> Clear Selection
+                      </button>
                     </div>
-                    -->
                   </div>
 
                   <div class="row mt-4 g-3">
@@ -170,18 +206,10 @@ if ($statusStmt) {
     </div>
     
     <!-- Custom Script For This Page Only  --> 
-    <script>
-      // Load contractors, statuses, and locations on page load
-      // $(document).ready(function() {
-        // TODO: switch to map-based location picker; keep API call ready for map overlay
-      //     $.get('/QTrace-Website/database/controllers/get_locations.php', function(data) {
-      //       const locations = JSON.parse(data);
-      //       locations.forEach(location => {
-      //         $('#location_id').append(`<option value="${location.location_id}">${location.address}, ${location.barangay}</option>`);
-      //       });
-      //     });
-      // });
-    </script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="/QTrace-Website/assets/js/location-picker.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
