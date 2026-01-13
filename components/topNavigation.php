@@ -12,19 +12,19 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-md-3 gap-sm-2 text-white">
               <li class="nav-item px-3 ">
-                  <a class="nav-link active" href="/QTrace-Website/home">Home</a>
+                  <a class="nav-link <?php echo ($current_page == 'home') ? 'active' : ''; ?>" href="/QTrace-Website/home">Home</a>
               </li>
               <li class="nav-item px-3">
-                  <a class="nav-link " href="/QTrace-Website/projects">Projects</a>
+                  <a class="nav-link <?php echo ($current_page == 'projects') ? 'active' : ''; ?>" href="/QTrace-Website/projects">Projects</a>
               </li>
               <li class="nav-item px-3">
-                  <a class="nav-link " href="/QTrace-Website/map">Map</a>
+                  <a class="nav-link <?php echo ($current_page == 'map') ? 'active' : ''; ?>" href="/QTrace-Website/map">Map</a>
               </li>
               <li class="nav-item px-3">
-                  <a class="nav-link " href="/QTrace-Website/contractors">Contractors</a>
+                  <a class="nav-link <?php echo ($current_page == 'contractors') ? 'active' : ''; ?>" href="/QTrace-Website/contractors">Contractors</a>
               </li>
               <li class="nav-item px-3">
-                  <a class="nav-link " href="/QTrace-Website/about">About Us</a>
+                  <a class="nav-link <?php echo ($current_page == 'aboutUs') ? 'active' : ''; ?>" href="/QTrace-Website/about">About Us</a>
               </li>
             </ul>
         </div>

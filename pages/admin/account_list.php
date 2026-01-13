@@ -1,7 +1,8 @@
 <?php 
     $current_page = 'accountList'; 
     // This controller should now fetch from the 'users' table
-    require('../../database/controllers/get_users.php'); 
+    require('../../database/controllers/get_users.php');
+    include('../../database/connection/security.php');
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +108,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+        <!-- Custome Script For This Page Only  --> 
     <script>
         function confirmDelete(id) {
             if(confirm("Are you sure you want to delete this account?")) {
@@ -115,5 +118,11 @@
             }
         }
     </script>
+    <!-- Reusable Script -->
+    <script src="/QTrace-Website/assets/js/mouseMovement.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>

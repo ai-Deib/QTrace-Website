@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2026 at 01:55 PM
+
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,16 +210,12 @@ CREATE TABLE `user_roles` (
 
 CREATE TABLE `user_table` (
   `user_ID` int(11) NOT NULL,
-  `QC_ID_Number` int(11) NOT NULL,
+  `QC_ID_Number` varchar(20) DEFAULT NULL,
   `user_lastName` varchar(50) NOT NULL,
   `user_firstName` varchar(50) NOT NULL,
   `user_middleName` varchar(20) DEFAULT NULL,
   `user_Email` varchar(20) NOT NULL,
-  `user_Password` varchar(20) NOT NULL,
-  `role_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Indexes for dumped tables
 --
 
@@ -392,7 +388,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Constraints for dumped tables

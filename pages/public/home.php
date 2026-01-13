@@ -1,3 +1,8 @@
+<?php 
+    $current_page = 'home'; 
+
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -59,7 +64,7 @@
                 <div class="container text-start">
                     <span class="badge badge-qc mb-4 fw-normal py-2 px-3 fs-6"> Official Quezon City Platform</span>
                     <h1 class="display-4 fw-medium">Transparency in Every Project</h1>
-                    <p class="lead col-md-8 mb-5 fw-normal fs-4">
+                    <p class="lead col-md-8 mb-5 fw-normal fs-4 ">
                         Track government projects, monitor progress, and report issues. QTRACE empowers 
                         Quezon City citizens to see where public funds go and ensure accountability.
                     </p>

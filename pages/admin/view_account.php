@@ -24,6 +24,8 @@
         header("Location: account_list.php");
         exit();
     }
+    
+    include('../../database/connection/security.php');
 ?>
 
 <!DOCTYPE html>

@@ -1,9 +1,27 @@
 <?php
-// Database connection
+// Start the session to handle the timeout logic
+session_start();
+
+// 1. Session Timeout Logic (5 Minutes)
+$timeout_duration = 300; // 300 seconds = 5 minutes
+
+if (isset($_SESSION['last_activity'])) {
+    $elapsed_time = time() - $_SESSION['last_activity'];
+    if ($elapsed_time > $timeout_duration) {
+        session_unset();
+        session_destroy();
+        header("Location: /QTrace-Website/login?timeout");
+        exit();
+    }
+}
+// Update last activity time on every request
+$_SESSION['last_activity'] = time();
+
+// 2. Database connection
 require('../connection/connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 1. Capture Information (Prepared statements handle escaping, so no need for real_escape_string)
+    // Capture Information
     $first_name     = $_POST['first_name'];
     $middle_name    = $_POST['middle_name'];
     $last_name      = $_POST['last_name'];
@@ -13,18 +31,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact_number = $_POST['contact_number'];
     $email          = $_POST['email'];
     $main_address   = $_POST['main_address'];
-    $password       = password_hash("defaultpassword", PASSWORD_BCRYPT);
+    
+    // SECURITY: Always hash passwords!
+    $raw_password   = $_POST['defaultpassword'];
+    $hashed_password = password_hash($raw_password, PASSWORD_BCRYPT);
 
-    // 2. Generate 11-digit Unique QC ID
+    // 3. Generate 11-digit Unique QC ID
     $isUnique = false;
     $qc_id_number = "";
 
     while (!$isUnique) {
-        // Generates 11 digits (3 digits + 8 digits)
-        $qc_id_number = mt_rand(100, 999) . mt_rand(10000000, 99999999);
+        // Generates a cryptographically secure 11-digit number
+        // We use random_int to ensure a wide spread of values
+        $qc_id_number = (string)random_int(10000000000, 99999999999);
 
         // Check database for collisions
-        $checkStmt = $conn->prepare("SELECT QC_ID_Number FROM user_table WHERE QC_ID_Number = ?");
+        $checkStmt = $conn->prepare("SELECT QC_ID_Number FROM user_table WHERE QC_ID_Number = ? LIMIT 1");
         $checkStmt->bind_param("s", $qc_id_number);
         $checkStmt->execute();
         $checkStmt->store_result();
@@ -35,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $checkStmt->close();
     }
 
-    // 3. Begin Database Transaction
+    // 4. Begin Database Transaction
     $conn->begin_transaction();
     
     try {    
@@ -55,7 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
-        // Bind all 11 strings
+        
+        // Bind parameters (11 strings)
         $stmt->bind_param("sssssssssss", 
             $first_name, 
             $middle_name, 
@@ -66,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $contact_number, 
             $email, 
             $main_address, 
-            $password, 
+            $hashed_password, 
             $qc_id_number
         );
 
