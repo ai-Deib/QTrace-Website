@@ -72,7 +72,7 @@
                         <div class="card border-0 shadow-sm mb-2 p-3">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
-                                    <img src=" <?= !empty($contractor['Contractor_Logo_Path']) ? '/QTrace-Website/uploads/logos/' . $contractor['Contractor_Logo_Path'] : 'https://via.placeholder.com/150' ?>" class="company-logo-lg rounded-3 me-4" alt="Company Logo">
+                                    <img src="<?= !empty($contractor['Contractor_Logo_Path']) ? $contractor['Contractor_Logo_Path'] : 'https://via.placeholder.com/150' ?>" class="company-logo-lg rounded-3 me-4" alt="Company Logo">
                                     <div>
                                         <h1 class="fw-medium mb-1 fs-3"><?= htmlspecialchars($contractor['Contractor_Name']) ?></h1>
                                         <p class="text-muted mb-0 fs-6"><i class="bi bi-person-badge me-2"></i><?= htmlspecialchars($contractor['Owner_Name']) ?></p>
