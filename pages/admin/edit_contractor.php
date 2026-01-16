@@ -78,7 +78,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"> <a href="/QTrace-Website/dashboard">Home</a> </li>
                                 <li class="breadcrumb-item"><a href="/QTrace-Website/contractor-list">Contractor List</a></li>
-                                <li class="breadcrumb-item"><a href="/QTrace-Website/pages/admin/view_contractor?id=<?= htmlspecialchars($contractor['Contractor_Id']) ?>">Contractor Details</a></li>
+                                <li class="breadcrumb-item"><a href="/QTrace-Website/pages/admin/view_contractor.php?id=<?= htmlspecialchars($contractor['Contractor_Id']) ?>">Contractor Details</a></li>
                                 <li class="breadcrumb-item active">Edit Contractor</li>
                             </ol>
                 </nav>
@@ -204,7 +204,7 @@
                                                     <a href="<?= $doc['Document_Path'] ?>" target="_blank" class="btn btn-sm btn-outline-primary">
                                                         <i class="bi bi-eye"></i> View
                                                     </a>
-                                                    </div>
+                                                </div>
                                             </div>
                                         <?php 
                                             endwhile; 
@@ -262,7 +262,7 @@
 
                             <div class="row mt-4 g-3">
                                 <div class="col-6">
-                                <a href="/QTrace-Website/pages/admin/view_contractor?id=<?= htmlspecialchars($contractor['Contractor_Id']) ?>" class="btn btn-outline-secondary w-100 fw-medium">Contractor Details</a>
+                                <a href="/QTrace-Website/pages/admin/view_contractor.php?id=<?= htmlspecialchars($contractor['Contractor_Id']) ?>" class="btn btn-outline-secondary w-100 fw-medium">Contractor Details</a>
                                 </div>
                                 <div class="col-6">
                                 <button class="btn bg-color-primary text-light w-100 fw-medium" type="submit"> Update </button>

@@ -90,6 +90,9 @@
                                         </h3>
                                         <p class="text-secondary mb-0"><?php echo htmlspecialchars($project['ProjectDetails_Description']); ?></p>
                                     </div>
+                                    <div class="ms-auto d-flex">
+                                        <a href="/QTrace-Website/pages/admin/edit_project.php?id=<?= $project_id ?>" class="btn btn-dark">Edit Project</a>
+                                    </div>
                                 </div>
 
                                 <div class="row g-3 mt-2">

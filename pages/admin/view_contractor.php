@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="ms-auto d-flex ">
-                                        <a href="edit_contractor.php?id=<?= $contractor_id ?>" class="btn btn-dark">Edit Profile</a>
+                                        <a href="/QTrace-Website/pages/admin/edit_contractor.php?id=<?= $contractor_id ?>" class="btn btn-dark">Edit Profile</a>
                                     </div>
                                 </div>
 
