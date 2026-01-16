@@ -48,9 +48,14 @@
                     <i class="bi bi-arrow-left"></i> Back to List
                 </a>
                 <h3 class="fw-bold m-0">User Profile</h3>
-                <button class="btn btn-primary" onclick="window.print()">
-                    <i class="bi bi-printer"></i> Print
-                </button>
+                <div class="d-flex gap-2">
+                    <a href="/QTrace-Website/pages/admin/edit_account.php?id=<?= $user['user_ID'] ?>" class="btn btn-dark">
+                        <i class="bi bi-pencil-square"></i> Edit Profile
+                    </a>
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <i class="bi bi-printer"></i> Print
+                    </button>
+                </div>
             </div>
 
             <div class="card border-0 shadow-sm">
@@ -112,7 +117,7 @@
                 </div>
 
                 <div class="card-footer bg-light text-end py-3">
-                    <a href="edit_user.php?id=<?= $user['user_ID'] ?>" class="btn btn-warning btn-sm">
+                    <a href="/QTrace-Website/pages/admin/edit_account.php?id=<?= $user['user_ID'] ?>" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil-square"></i> Edit Information
                     </a>
                 </div>
