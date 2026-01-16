@@ -44,7 +44,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <a href="account_list.php" class="btn btn-outline-secondary">
+                <a href="list_account.php" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Back to List
                 </a>
                 <h3 class="fw-bold m-0">User Profile</h3>
@@ -114,12 +114,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card-footer bg-light text-end py-3">
-                    <a href="/QTrace-Website/pages/admin/edit_account.php?id=<?= $user['user_ID'] ?>" class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil-square"></i> Edit Information
-                    </a>
                 </div>
             </div>
         </div>

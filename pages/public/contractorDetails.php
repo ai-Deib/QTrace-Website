@@ -77,7 +77,7 @@
                         <div class="d-flex align-items-center mb-3">
                                 <div class="logo-circle me-4">
                                     <?php if($contractor['Contractor_Logo_Path']): ?>
-                                        <img src="/QTrace-Website/uploads/logos/<?php echo htmlspecialchars($contractor['Contractor_Logo_Path']); ?>" alt="Logo">
+                                        <img src="<?php echo htmlspecialchars($contractor['Contractor_Logo_Path']); ?>" alt="Logo">
                                     <?php else: ?>
                                         <i class="bi bi-building fs-1"></i>
                                     <?php endif; ?>

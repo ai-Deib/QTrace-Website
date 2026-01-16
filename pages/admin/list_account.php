@@ -83,8 +83,8 @@
                                                     <a href="/QTrace-Website/pages/admin/view_account.php?id=<?= $row['user_ID'] ?>" class="btn btn-sm btn-outline-primary" title="View">
                                                         <i class="bi bi-eye"></i>
                                                     </a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(<?= $row['user_ID'] ?>)" title="Delete">
-                                                        <i class="bi bi-trash"></i>
+                                                    <button class="btn btn-sm" onclick="confirmDisable(<?= $row['user_ID'] ?>)" title="Disable" style="background-color: transparent; border: 1px solid #c2180c; color: #c2180c;" onmouseover="this.style.backgroundColor='#871810'; this.style.borderColor='#871810'; this.style.color='#ffffff'; this.querySelector('i').style.color='#ffffff';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#c2180c'; this.style.color='#c2180c'; this.querySelector('i').style.color='#c2180c';">
+                                                        <i class="bi bi-x-circle" style="color:#c2180c;"></i>
                                                     </button>
                                                 </div>
                                             </td>
@@ -111,9 +111,9 @@
 
         <!-- Custome Script For This Page Only  --> 
     <script>
-        function confirmDelete(id) {
-            if(confirm("Are you sure you want to delete this account?")) {
-                window.location.href = "../../database/controllers/delete_user.php?id=" + id;
+        function confirmDisable(id) {
+            if(confirm("Are you sure you want to disable this account? The user will no longer be able to log in.")) {
+                window.location.href = "/QTrace-Website/database/controllers/disable_account.php?id=" + id;
             }
         }
     </script>

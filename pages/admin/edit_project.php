@@ -106,7 +106,7 @@
 							<div class="col-12 card border-0 shadow-sm p-3">
 
                 
-								<form method="POST" action="/QTrace-Website/database/controllers/edit_project.php" id="multiStepForm" novalidate>
+								<form method="POST" action="/QTrace-Website/database/controllers/edit_project.php" id="multiStepForm" enctype="multipart/form-data" novalidate>
 									<input type="hidden" name="Project_ID" value="<?= htmlspecialchars($project_id) ?>" />
 									<!-- Project Information -->
 									<div class="step-pane active" id="p0">

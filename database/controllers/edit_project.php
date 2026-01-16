@@ -84,10 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     // Generate unique filename to prevent overwriting
                     $filename = "DOC_" . $project_id . "_" . time() . "_" . $key . "." . $ext;
-                    $filePath = $docDir . $filename;
+                    $serverPath = $docDir . $filename;
+                    $webPath = "/QTrace-Website/uploads/projects/documents/" . $filename;
 
-                    if (move_uploaded_file($tmpPath, $filePath)) {
-                        $stmtDoc->bind_param("iss", $project_id, $filePath, $docName);
+                    if (move_uploaded_file($tmpPath, $serverPath)) {
+                        $stmtDoc->bind_param("iss", $project_id, $webPath, $docName);
                         $stmtDoc->execute();
                     }
                 }
@@ -112,10 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $ext     = pathinfo($val, PATHINFO_EXTENSION);
                     
                     $filename = "IMG_" . $project_id . "_" . time() . "_" . $key . "." . $ext;
-                    $filePath = $imgDir . $filename;
+                    $serverPath = $imgDir . $filename;
+                    $webPath = "/QTrace-Website/uploads/projects/milestones/" . $filename;
 
-                    if (move_uploaded_file($tmpPath, $filePath)) {
-                        $stmtMilestone->bind_param("iss", $project_id, $filePath, $phase);
+                    if (move_uploaded_file($tmpPath, $serverPath)) {
+                        $stmtMilestone->bind_param("iss", $project_id, $webPath, $phase);
                         $stmtMilestone->execute();
                     }
                 }

@@ -137,7 +137,7 @@
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="/QTrace-Website/view-contractor?id=<?= $row['Contractor_Id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
-                                                        <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(<?= $row['Contractor_Id'] ?>)"><i class="bi bi-trash"></i></button>
+                                                        <button class="btn btn-sm" onclick="confirmDisable(<?= $row['Contractor_Id'] ?>)" title="Disable" style="background-color: transparent; border: 1px solid #c2180c; color: #c2180c;" onmouseover="this.style.backgroundColor='#871810'; this.style.borderColor='#871810'; this.style.color='#ffffff'; this.querySelector('i').style.color='#ffffff';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#c2180c'; this.style.color='#c2180c'; this.querySelector('i').style.color='#c2180c';"><i class="bi bi-x-circle" style="color:#c2180c;"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -157,7 +157,11 @@
 
         <!-- Custome Script For This Page Only  --> 
         <script>
-
+        function confirmDisable(id) {
+            if(confirm("Are you sure you want to disable this contractor? They will be hidden from listings.")) {
+                window.location.href = "/QTrace-Website/database/controllers/disable_contractor.php?id=" + id;
+            }
+        }
         </script>
          
         <!-- Reusable Script -->

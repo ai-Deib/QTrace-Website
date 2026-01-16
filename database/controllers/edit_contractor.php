@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Handle Logo Upload (only if new file is uploaded)
         $logo_path = null;
         if (isset($_FILES['company_logo']) && $_FILES['company_logo']['error'] == 0) {
-            $logoDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/logos/";
+            $logoDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/contractors/logos/";
             if (!is_dir($logoDir)) mkdir($logoDir, 0777, true);
             $ext = pathinfo($_FILES['company_logo']['name'], PATHINFO_EXTENSION);
             $safe_company_name = preg_replace('/[^A-Za-z0-9\-]/', '_', $company_name);
             $filename = $safe_company_name . "_logo." . $ext;
-            $logo_path = "/QTrace-Website/uploads/logos/" . $filename;
+            $logo_path = "/QTrace-Website/uploads/contractors/logos/" . $filename;
             move_uploaded_file($_FILES['company_logo']['tmp_name'], $logoDir . $filename);
         }
         
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insert New Legal Documents (if any)
         if (!empty($_FILES['document_files']['name'][0])) {
-            $docDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/documents/";
+            $docDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/contractors/documents/";
             if (!is_dir($docDir)) mkdir($docDir, 0777, true);
             
             $stmtDoc = $conn->prepare("INSERT INTO contractor_documents_table (
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $safe_company = preg_replace('/[^A-Za-z0-9\-]/', '_', $company_name);
                     $safe_doc = preg_replace('/[^A-Za-z0-9\-]/', '_', $docName);
                     $filename = $safe_company . "_" . $safe_doc . "." . $ext;
-                    $filePath = "/QTrace-Website/uploads/documents/" . $filename;
+                    $filePath = "/QTrace-Website/uploads/contractors/documents/" . $filename;
                     
                     if (move_uploaded_file($tmpPath, $docDir . $filename)) {
                         $stmtDoc->bind_param("iss", $contractor_id, $docName, $filePath);

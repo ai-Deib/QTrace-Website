@@ -132,8 +132,8 @@
                                                         <a href="/QTrace-Website/view-project?id=<?= $row['Project_ID'] ?>" class="btn btn-sm btn-outline-primary" title="View Project">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
-                                                        <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(<?= $row['Project_ID'] ?>)" title="Delete Project">
-                                                            <i class="bi bi-trash"></i>
+                                                        <button class="btn btn-sm" onclick="confirmDisable(<?= $row['Project_ID'] ?>)" title="Disable Project" style="background-color: transparent; border: 1px solid #c2180c; color: #c2180c;" onmouseover="this.style.backgroundColor='#871810'; this.style.borderColor='#871810'; this.style.color='#ffffff'; this.querySelector('i').style.color='#ffffff';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#c2180c'; this.style.color='#c2180c'; this.querySelector('i').style.color='#c2180c';">
+                                                            <i class="bi bi-x-circle" style="color:#c2180c;"></i>
                                                         </button>
                                                     </div>
                                                 </td>
@@ -186,17 +186,11 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            // Delete project handler
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const projectId = this.getAttribute('data-id');
-                    if (confirm('Are you sure you want to delete this project?')) {
-                        // TODO: Implement delete functionality
-                        console.log('Delete project ID:', projectId);
-                    }
-                });
-            });
+            function confirmDisable(id) {
+                if (confirm('Are you sure you want to disable this project? It will be hidden from public view.')) {
+                window.location.href = "/QTrace-Website/database/controllers/disable_project.php?id=" + id;
+                }
+            }
         </script>
     </body>
 </html>

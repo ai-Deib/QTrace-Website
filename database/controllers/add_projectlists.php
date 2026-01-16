@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // --- STEP 3: Handle Legal Documents (projectsdocument_table) ---
         if (!empty($_FILES['document_files']['name'][0])) {
-            $docDir = "/QTrace-Website/uploads/projects/documents/";
+            $docDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/projects/documents/";
             if (!is_dir($docDir)) mkdir($docDir, 0777, true);
 
             $stmtDoc = $conn->prepare("INSERT INTO projectsdocument_table (
@@ -78,10 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     // Generate unique filename to prevent overwriting
                     $filename = "DOC_" . $project_id . "_" . time() . "_" . $key . "." . $ext;
-                    $filePath = $docDir . $filename;
+                    $serverPath = $docDir . $filename;
+                    $webPath = "/QTrace-Website/uploads/projects/documents/" . $filename;
 
-                    if (move_uploaded_file($tmpPath, $filePath)) {
-                        $stmtDoc->bind_param("iss", $project_id, $filePath, $docName);
+                    if (move_uploaded_file($tmpPath, $serverPath)) {
+                        $stmtDoc->bind_param("iss", $project_id, $webPath, $docName);
                         $stmtDoc->execute();
                     }
                 }
@@ -90,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // --- STEP 4: Handle Milestone Gallery (projectmilestone_table) ---
         if (!empty($_FILES['img_files']['name'][0])) {
-            $imgDir = "/QTrace-Website/uploads/projects/milestones/";
+            $imgDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/projects/milestones/";
             if (!is_dir($imgDir)) mkdir($imgDir, 0777, true);
 
             $stmtMilestone = $conn->prepare("INSERT INTO projectmilestone_table (
@@ -106,10 +107,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $ext     = pathinfo($val, PATHINFO_EXTENSION);
                     
                     $filename = "IMG_" . $project_id . "_" . time() . "_" . $key . "." . $ext;
-                    $filePath = $imgDir . $filename;
+                    $serverPath = $imgDir . $filename;
+                    $webPath = "/QTrace-Website/uploads/projects/milestones/" . $filename;
 
-                    if (move_uploaded_file($tmpPath, $filePath)) {
-                        $stmtMilestone->bind_param("iss", $project_id, $filePath, $phase);
+                    if (move_uploaded_file($tmpPath, $serverPath)) {
+                        $stmtMilestone->bind_param("iss", $project_id, $webPath, $phase);
                         $stmtMilestone->execute();
                     }
                 }
