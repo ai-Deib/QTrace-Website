@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2026 at 09:33 AM
+-- Generation Time: Jan 17, 2026 at 03:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `qtrace`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `articles_table`
+--
+
+CREATE TABLE `articles_table` (
+  `article_ID` int(11) NOT NULL,
+  `Project_ID` int(11) NOT NULL,
+  `user_ID` int(11) DEFAULT NULL,
+  `article_type` varchar(50) NOT NULL COMMENT 'Article, Update, Milestone, etc.',
+  `article_description` longtext NOT NULL,
+  `article_photo_url` varchar(255) DEFAULT NULL,
+  `article_status` varchar(20) DEFAULT 'Draft' COMMENT 'Draft, Published, Archived',
+  `article_created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `article_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `articles_table`
+--
+
+INSERT INTO `articles_table` (`article_ID`, `Project_ID`, `user_ID`, `article_type`, `article_description`, `article_photo_url`, `article_status`, `article_created_at`, `article_updated_at`) VALUES
+(1, 8, 6, 'News', 'Gerald tapos na po', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3ILaGoo4uswKWpQdBwuzJbP-zSYizZFxjMg&s', 'Published', '2026-01-17 13:08:09', '2026-01-17 13:09:43');
 
 -- --------------------------------------------------------
 
@@ -108,8 +133,7 @@ CREATE TABLE `contractor_table` (
   `Company_Email_Address` varchar(50) NOT NULL,
   `Years_Of_Experience` int(11) NOT NULL,
   `Additional_Notes` varchar(250) NOT NULL,
-  `Created_At` date NOT NULL DEFAULT current_timestamp(),
-  `Status` enum('Active','Disabled') NOT NULL DEFAULT 'Active'
+  `Created_At` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -278,8 +302,7 @@ CREATE TABLE `user_table` (
   `user_sex` enum('female','male','other') NOT NULL,
   `user_contactInformation` bigint(20) NOT NULL,
   `user_address` varchar(100) NOT NULL,
-  `created_At` date NOT NULL DEFAULT current_timestamp(),
-  `Status` enum('Active','Disabled') NOT NULL DEFAULT 'Active'
+  `created_At` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -293,6 +316,16 @@ INSERT INTO `user_table` (`user_ID`, `QC_ID_Number`, `user_lastName`, `user_firs
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `articles_table`
+--
+ALTER TABLE `articles_table`
+  ADD PRIMARY KEY (`article_ID`),
+  ADD KEY `user_ID` (`user_ID`),
+  ADD KEY `idx_project` (`Project_ID`),
+  ADD KEY `idx_status` (`article_status`),
+  ADD KEY `idx_created` (`article_created_at`);
 
 --
 -- Indexes for table `contractor_documents_table`
@@ -366,6 +399,12 @@ ALTER TABLE `user_table`
 --
 
 --
+-- AUTO_INCREMENT for table `articles_table`
+--
+ALTER TABLE `articles_table`
+  MODIFY `article_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `contractor_documents_table`
 --
 ALTER TABLE `contractor_documents_table`
@@ -417,7 +456,7 @@ ALTER TABLE `project_categories`
 -- AUTO_INCREMENT for table `report_table`
 --
 ALTER TABLE `report_table`
-  MODIFY `report_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_table`
@@ -428,6 +467,13 @@ ALTER TABLE `user_table`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `articles_table`
+--
+ALTER TABLE `articles_table`
+  ADD CONSTRAINT `articles_table_ibfk_1` FOREIGN KEY (`Project_ID`) REFERENCES `projects_table` (`Project_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `articles_table_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `user_table` (`user_ID`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `contractor_documents_table`

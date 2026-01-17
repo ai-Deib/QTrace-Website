@@ -1,6 +1,7 @@
 <?php 
-    $page_name = 'project_reports'; 
-    include('../../database/connection/security.php');    
+    $page_name = 'project_articles'; 
+    include('../../database/connection/security.php');
+    require('../../database/controllers/get_articles.php');
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Article compilation per project in an editorial card view.">
         <meta name="author" content="ai-Deib">
-        <title>QTrace — Reports</title>
+        <title>QTrace — Articles</title>
         <!-- Bootstrap & Icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -52,73 +53,108 @@
                     <div class="container-fluid">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
-                                <div class="text-uppercase small text-muted fw-bold">Reports</div>
+                                <div class="text-uppercase small text-muted fw-bold">Articles</div>
                                 <h1 class="h4 fw-bold m-0">Article Compilation by Project</h1>
                                 <p class="text-muted m-0">Editorial card view inspired by Inquirer.net</p>
                                 <nav class="mt-2" aria-label="breadcrumb">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="/QTrace-Website/dashboard">Admin</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Articles</li>
                                     </ol>
                                 </nav>
                             </div>
                         </div>
 
-                        <!-- Add Article moved to separate page -->
+                        <?php if(isset($_SESSION['success_message'])): ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle me-2"></i>
+                                <?= $_SESSION['success_message']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <?php unset($_SESSION['success_message']); ?>
+                        <?php endif; ?>
+
                         <div class="mb-3 d-flex justify-content-end">
-                            <a class="btn btn-primary btn-sm" href="/QTrace-Website/add-article">Add Article</a>
+                            <a class="btn btn-primary btn-sm" href="/QTrace-Website/add-article"><i class="bi bi-plus-lg me-1"></i> Add Article</a>
                         </div>
 
-                        <!-- Unified Articles List -->
+                        <!-- Articles List -->
                         <section class="card border-0 shadow-sm mb-4" id="articles-section">
                             <div class="card-body">
                                 <div class="project-heading mb-3">
                                     <span class="fw-bold">All Articles</span>
                                     <span class="text-muted small">Combined updates and articles across projects</span>
                                 </div>
-                                <div class="news-hero mb-3">
-                                    <div class="thumb">
-                                        <img alt="Hero Placeholder" src="https://placehold.co/1280x720" />
-                                    </div>
-                                    <div>
-                                        <div class="kicker">Update</div>
-                                        <div class="title">Foundation Completed</div>
-                                        <div class="meta">Sample Project A • Admin • 2025-12-05</div>
-                                        <div class="excerpt">Concrete curing finished; moving to structural works</div>
-                                    </div>
-                                </div>
-                                <div class="news-grid" id="articles-grid">
-                                    <div class="news-card">
-                                        <div class="thumb"><img alt="Thumb" src="https://placehold.co/280x200" /></div>
-                                        <div class="body">
-                                            <div class="kicker">Article</div>
-                                            <div class="headline">Community Engagement</div>
-                                            <div class="meta">Sample Project A • Contractor • 2025-12-18</div>
-                                            <div class="excerpt">Survey results and feedback summary</div>
-                                            <div class="mt-2"><span class="badge bg-success">Published</span></div>
+
+                                <?php if ($articles_result && $articles_result->num_rows > 0): ?>
+                                    <?php 
+                                    $first = true;
+                                    while($article = $articles_result->fetch_assoc()): 
+                                        if ($first): 
+                                            $first = false;
+                                    ?>
+                                    <!-- Hero Article (First) -->
+                                    <div class="news-hero mb-3" style="cursor: pointer;" onclick="window.location.href='/QTrace-Website/view-article?id=<?= $article['article_ID'] ?>';">
+                                        <div class="thumb">
+                                            <?php if (!empty($article['article_photo_url'])): ?>
+                                                <img alt="<?= htmlspecialchars($article['ProjectDetails_Title']) ?>" src="<?= htmlspecialchars($article['article_photo_url']) ?>" />
+                                            <?php else: ?>
+                                                <img alt="<?= htmlspecialchars($article['ProjectDetails_Title']) ?>" src="https://placehold.co/1280x720" />
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <div class="kicker"><?= htmlspecialchars($article['article_type']) ?></div>
+                                            <div class="title"><?= htmlspecialchars($article['ProjectDetails_Title']) ?></div>
+                                            <div class="meta">
+                                                <?= htmlspecialchars($article['ProjectDetails_Barangay']) ?> • 
+                                                <?= htmlspecialchars($article['author_name'] ?: 'Admin') ?> • 
+                                                <?= date('Y-m-d', strtotime($article['article_created_at'])) ?>
+                                            </div>
+                                            <div class="excerpt"><?= htmlspecialchars(substr($article['article_description'], 0, 120)) ?>...</div>
                                         </div>
                                     </div>
-                                    <div class="news-card">
-                                        <div class="thumb"><img alt="Thumb" src="https://placehold.co/280x200" /></div>
-                                        <div class="body">
-                                            <div class="kicker">Article</div>
-                                            <div class="headline">Procurement Insights Q4</div>
-                                            <div class="meta">Sample Project B • Client • 2025-11-20</div>
-                                            <div class="excerpt">Vendor performance and materials availability</div>
-                                            <div class="mt-2"><span class="badge bg-warning text-dark">Draft</span></div>
+
+                                    <div class="news-grid" id="articles-grid">
+                                    <?php else: ?>
+                                        <!-- Regular Article Cards -->
+                                        <div class="news-card" style="cursor: pointer;" onclick="window.location.href='/QTrace-Website/view-article?id=<?= $article['article_ID'] ?>';">
+                                            <div class="thumb">
+                                                <?php if (!empty($article['article_photo_url'])): ?>
+                                                    <img alt="<?= htmlspecialchars($article['ProjectDetails_Title']) ?>" src="<?= htmlspecialchars($article['article_photo_url']) ?>" />
+                                                <?php else: ?>
+                                                    <img alt="<?= htmlspecialchars($article['ProjectDetails_Title']) ?>" src="https://placehold.co/280x200" />
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="body">
+                                                <div class="kicker"><?= htmlspecialchars($article['article_type']) ?></div>
+                                                <div class="headline"><?= htmlspecialchars($article['ProjectDetails_Title']) ?></div>
+                                                <div class="meta">
+                                                    <?= htmlspecialchars($article['ProjectDetails_Barangay']) ?> • 
+                                                    <?= htmlspecialchars($article['author_name'] ?: 'Admin') ?> • 
+                                                    <?= date('Y-m-d', strtotime($article['article_created_at'])) ?>
+                                                </div>
+                                                <div class="excerpt"><?= htmlspecialchars(substr($article['article_description'], 0, 80)) ?>...</div>
+                                                <div class="mt-2">
+                                                    <?php 
+                                                    $statusBadges = array(
+                                                        'Published' => 'bg-success',
+                                                        'Draft' => 'bg-warning text-dark'
+                                                    );
+                                                    $badgeClass = isset($statusBadges[$article['article_status']]) ? $statusBadges[$article['article_status']] : 'bg-secondary';
+                                                    ?>
+                                                    <span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($article['article_status']) ?></span>
+                                                    <span class="badge bg-light text-dark"><?= formatBudget($article['ProjectDetails_Budget']) ?></span>
+                                                </div>
+                                            </div>
                                         </div>
+                                    <?php endif; endwhile; ?>
                                     </div>
-                                    <div class="news-card">
-                                        <div class="thumb"><img alt="Thumb" src="https://placehold.co/280x200" /></div>
-                                        <div class="body">
-                                            <div class="kicker">Update</div>
-                                            <div class="headline">Milestone: Structural Works</div>
-                                            <div class="meta">Sample Project A • Admin • 2025-12-10</div>
-                                            <div class="excerpt">Steel framing underway for the main building</div>
-                                            <div class="mt-2"><span class="badge bg-success">Published</span></div>
-                                        </div>
+                                <?php else: ?>
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-folder-x fs-1 text-muted"></i>
+                                        <p class="mt-3 text-muted">No articles found. Click "Add Article" to create one.</p>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </section>
                         <div class="d-flex justify-content-end mt-3" id="articles-pagination" data-page="1"></div>
