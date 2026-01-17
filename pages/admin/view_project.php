@@ -83,18 +83,17 @@
                     <div class="container-fluid py-2">
                         <div class="card main-card mb-4">
                             <div class="card-body py-5 px-4">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
+                                <div class="row mb-3 d-flex flex-column flex-md-row align-items-start">
+                                    <div class="col-md-3 d-flex justify-content-start justify-content-md-end mb-2 mb-md-0 order-1 order-md-2">
+                                        <a href="/QTrace-Website/pages/admin/edit_project.php?id=<?= $project_id ?>" class="btn btn-blue-primary btn-dark px-3 py-2 text-nowrap">Edit Project</a>
+                                    </div>
+                                    <div class="col-md-9 order-2 order-md-1">
                                         <h3 class="fw-bold mb-3">
                                             <?php echo htmlspecialchars($project['ProjectDetails_Title']); ?>
                                         </h3>
                                         <p class="text-secondary mb-0"><?php echo htmlspecialchars($project['ProjectDetails_Description']); ?></p>
                                     </div>
-                                    <div class="ms-auto d-flex">
-                                        <a href="/QTrace-Website/pages/admin/edit_project.php?id=<?= $project_id ?>" class="btn btn-dark">Edit Project</a>
-                                    </div>
                                 </div>
-
                                 <div class="row g-3 mt-2">
                                     <div class="col-md-3 border-end">
                                         <div class="d-flex align-items-center">
@@ -136,17 +135,38 @@
                             </div>
                         </div>
 
-                        <div class="card main-card">
-                            <div class="card-header bg-white border-0 p-2">
-                                <ul class="nav nav-tabs details px-4 pt-2 pb-2 gap-3" id="projectTabs">
-                                    <li class="nav-item "><button class="nav-link text-black-50 fw-medium  active" data-bs-toggle="tab" data-bs-target="#overview"><i class="bi bi-file-text me-2"></i>Overview</button></li>
-                                    <li class="nav-item "><button class="nav-link text-black-50 fw-medium " data-bs-toggle="tab" data-bs-target="#docs"><i class="bi bi-folder2-open me-2"></i>Documents (<?php echo count($documents); ?>)</button></li>
-                                    <li class="nav-item "><button class="nav-link text-black-50 fw-medium " data-bs-toggle="tab" data-bs-target="#gallery"><i class="bi bi-images me-2"></i>Photo Gallery (<?php echo count($milestones); ?>)</button></li>
-                                    <li class="nav-item "><button class="nav-link text-black-50 fw-medium " data-bs-toggle="tab" data-bs-target="#reports"><i class="bi bi-chat-left-dots me-2"></i>Reports (<?php echo $report_count; ?>)</button></li>
-                                </ul>
-                            </div>
+                        <div class="card-header card bg-white border-0 p-2">
+                            <ul class="nav nav-tabs details px-4 pt-2 pb-2 gap-3 justify-content-md-start justify-content-center" id="projectTabs">
+                                <li class="nav-item">
+                                    <button class="nav-link active text-black-50 fw-medium d-flex align-items-center px-2 px-md-3" data-bs-toggle="tab" data-bs-target="#overview">
+                                    <i class="bi bi-file-text fs-6 fs-md-5"></i>
+                                    <span class="ms-2 d-none d-md-inline">Overview</span>
+                                    </button>
+                                </li>
+
+                                <li class="nav-item"> 
+                                    <button class="nav-link text-black-50 fw-medium d-flex align-items-center px-2 px-md-3" data-bs-toggle="tab" data-bs-target="#docs">
+                                    <i class="bi bi-folder2-open fs-6 fs-md-5"></i>
+                                    <span class="ms-2 d-none d-md-inline"> Documents (<?= count($documents); ?>)</span>
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link text-black-50 fw-medium d-flex align-items-center px-2 px-md-3" data-bs-toggle="tab" data-bs-target="#gallery">
+                                    <i class="bi bi-images fs-6 fs-md-5"></i>
+                                    <span class="ms-2 d-none d-md-inline"> Photo Gallery (<?= count($milestones); ?>)</span>
+                                    </button>
+                                </li>
+
+                                <li class="nav-item"> 
+                                    <button class="nav-link text-black-50 fw-medium d-flex align-items-center px-2 px-md-3" data-bs-toggle="tab" data-bs-target="#reports">
+                                    <i class="bi bi-chat-left-dots fs-6 fs-md-5"></i>
+                                    <span class="ms-2 d-none d-md-inline"> Reports (<?= $report_count; ?>)</span>
+                                    </button>
+                                </li>
+                            </ul>
+
                             <div class="card-body p-4 tab-content">
-                                
                                 <div class="tab-pane fade show active" id="overview">
                                     <div class="row">
                                         <div class="col-md-6">
