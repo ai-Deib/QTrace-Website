@@ -21,6 +21,7 @@ RewriteRule ^edit-contractor$ pages/admin/edit_contractor.php [NC,L]
 RewriteRule ^history$ pages/admin/history.php [NC,L]
 RewriteRule ^project-articles$ pages/admin/project_articles.php [NC,L]
 RewriteRule ^view-article$ pages/admin/view_article.php [NC,L]
+RewriteRule ^edit-article$ pages/admin/edit_article.php [NC,L]
 RewriteRule ^project-reports$ pages/admin/project_reports.php [NC,L]
 RewriteRule ^add-article$ pages/admin/add_article.php [NC,L]
 

@@ -5,13 +5,6 @@
     
     // Helper function to format budget
     function formatBudget($amount) {
-        if ($amount >= 1000000000) {
-            return '₱' . number_format($amount / 1000000000, 1) . 'B';
-        } elseif ($amount >= 1000000) {
-            return '₱' . number_format($amount / 1000000, 1) . 'M';
-        } elseif ($amount >= 1000) {
-            return '₱' . number_format($amount / 1000, 1) . 'K';
-        }
         return '₱' . number_format($amount, 2);
     }
 ?>
@@ -122,14 +115,19 @@
                             </div>
                         </article>
 
-                        <!-- Navigation -->
+                        <!-- Navigation & Actions -->
                         <div class="d-flex gap-2 mt-4 justify-content-between">
                             <a href="/QTrace-Website/project-articles" class="btn btn-outline-secondary">
                                 <i class="bi bi-arrow-left me-1"></i> Back to Articles
                             </a>
-                            <a href="/QTrace-Website/add-article" class="btn btn-primary">
-                                <i class="bi bi-plus-lg me-1"></i> Add New Article
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="/QTrace-Website/edit-article?id=<?= $article['article_ID'] ?>" class="btn btn-primary">
+                                    <i class="bi bi-pencil-square me-1"></i> Edit Article
+                                </a>
+                                <button class="btn btn-danger" onclick="deleteArticle(<?= $article['article_ID'] ?>)">
+                                    <i class="bi bi-trash me-1"></i> Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -137,6 +135,13 @@
         </div>
 
         <!-- Scripts -->
+        <script>
+            function deleteArticle(articleId) {
+                if (confirm('Are you sure you want to delete this article? This action cannot be undone.')) {
+                    window.location.href = `/QTrace-Website/database/controllers/delete_article.php?id=${articleId}`;
+                }
+            }
+        </script>
         <script src="/QTrace-Website/assets/js/mouseMovement.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     </body>

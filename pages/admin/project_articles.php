@@ -2,6 +2,11 @@
     $page_name = 'project_articles'; 
     include('../../database/connection/security.php');
     require('../../database/controllers/get_articles.php');
+    
+    // Helper function to format budget
+    function formatBudget($amount) {
+        return '₱' . number_format($amount, 2);
+    }
 ?>
 
 <!DOCTYPE html>

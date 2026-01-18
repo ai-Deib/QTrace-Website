@@ -31,13 +31,6 @@ $projects_result = $conn->query($sql);
 
 // Helper function to format budget
 function formatBudget($amount) {
-    if ($amount >= 1000000000) {
-        return '₱' . number_format($amount / 1000000000, 1) . 'B';
-    } elseif ($amount >= 1000000) {
-        return '₱' . number_format($amount / 1000000, 1) . 'M';
-    } elseif ($amount >= 1000) {
-        return '₱' . number_format($amount / 1000, 1) . 'K';
-    }
     return '₱' . number_format($amount, 2);
 }
 ?>
