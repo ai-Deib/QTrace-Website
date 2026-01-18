@@ -28,6 +28,7 @@ if (!empty($search)) {
     $sql .= " AND (pd.ProjectDetails_Title LIKE '%$search%' OR pd.ProjectDetails_Description LIKE '%$search%')";
 }
 
+
 if (!empty($status) && $status !== 'All Status') {
     $sql .= " AND pt.Project_Status = '$status'";
 }

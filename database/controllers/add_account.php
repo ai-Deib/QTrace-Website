@@ -1,6 +1,10 @@
 <?php
-
+session_start();
+// Database connection
 require('../connection/connection.php');
+require_once('audit_service.php');
+
+$audit = new AuditService($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Capture Information
@@ -14,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email          = $_POST['email'];
     $main_address   = $_POST['main_address'];
     
-    // SECURITY: Always hash passwords!
     $raw_password   = $_POST['defaultpassword'];
     $hashed_password = password_hash($raw_password, PASSWORD_BCRYPT);
 
@@ -23,18 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $qc_id_number = "";
 
     while (!$isUnique) {
-        // Generates a cryptographically secure 11-digit number
-        // We use random_int to ensure a wide spread of values
         $qc_id_number = (string)random_int(10000000000, 99999999999);
-
-        // Check database for collisions
         $checkStmt = $conn->prepare("SELECT QC_ID_Number FROM user_table WHERE QC_ID_Number = ? LIMIT 1");
         $checkStmt->bind_param("s", $qc_id_number);
         $checkStmt->execute();
         $checkStmt->store_result();
 
         if ($checkStmt->num_rows == 0) {
-            $isUnique = true; // No match found, safe to use
+            $isUnique = true;
         }
         $checkStmt->close();
     }
@@ -55,13 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     user_Email,
                     user_address,
                     user_Password,
+                    user_status,
                     QC_ID_Number
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         
-        // Bind parameters (11 strings)
-        $stmt->bind_param("sssssssssss", 
+        $status = 'active';
+        $stmt->bind_param("ssssssssssss", // Corrected to 12 's' characters
             $first_name, 
             $middle_name, 
             $last_name, 
@@ -71,7 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $contact_number, 
             $email, 
             $main_address, 
-            $hashed_password, 
+            $hashed_password,
+            $status,
             $qc_id_number
         );
 
@@ -79,11 +80,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Execution failed: " . $stmt->error);
         }
 
+        // 5. GET THE NEW USER ID
+        $new_user_id = $conn->insert_id;
+
+        // 6. LOG THE ACTION
+        $admin_id = $_SESSION['user_ID'] ?? 0;
+        
+        // We prepare an array of the new data to store in new_values
+        $new_data = [
+            'name' => $first_name . ' ' . $last_name,
+            'role' => $role,
+            'email' => $email,
+            'qc_id' => $qc_id_number
+        ];
+
+        $audit->log(
+            $admin_id, 
+            'CREATE', 
+            'users', 
+            $new_user_id, 
+            null,      // Old values are null for a new record
+            $new_data  // Store the key details
+        );
+
         $conn->commit();
         $stmt->close();
         
-        // Redirect after success
-        header("Location: ../../pages/admin/account_list.php?status=added"); 
+        $msg = urlencode("Account added successfully.");
+        header("Location: /QTrace-Website/account-list?status=success&msg=$msg"); 
         exit();
 
     } catch (Exception $e) {

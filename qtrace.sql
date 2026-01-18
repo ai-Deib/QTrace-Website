@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2026 at 03:01 PM
+-- Generation Time: Jan 18, 2026 at 04:19 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,6 +45,35 @@ CREATE TABLE `articles_table` (
 
 INSERT INTO `articles_table` (`article_ID`, `Project_ID`, `user_ID`, `article_type`, `article_description`, `article_photo_url`, `article_status`, `article_created_at`, `article_updated_at`) VALUES
 (1, 8, 6, 'News', 'Gerald tapos na po', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3ILaGoo4uswKWpQdBwuzJbP-zSYizZFxjMg&s', 'Published', '2026-01-17 13:08:09', '2026-01-17 13:09:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs`
+--
+
+CREATE TABLE `audit_logs` (
+  `audit_log_id` binary(16) NOT NULL,
+  `user_id` varchar(36) NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `resource_type` varchar(50) NOT NULL,
+  `resource_id` varchar(36) NOT NULL,
+  `old_values` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`old_values`)),
+  `new_values` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`new_values`)),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `audit_logs`
+--
+
+INSERT INTO `audit_logs` (`audit_log_id`, `user_id`, `action`, `resource_type`, `resource_id`, `old_values`, `new_values`, `created_at`) VALUES
+(0x30303262303433372d663431332d3131, '6', 'UPDATE', 'users', '6', '{\"user_sex\":\"male\"}', '{\"user_sex\":\"other\"}', '2026-01-18 02:11:29'),
+(0x30396630613861622d663431322d3131, '6', 'UPDATE', 'users', '8', '{\"user_firstName\":\"Uno\"}', '{\"user_firstName\":\"Dos\"}', '2026-01-18 02:04:36'),
+(0x35333132303661652d663431322d3131, '6', 'UPDATE', 'users', '6', '{\"user_middleName\":\"P.\",\"user_contactInformation\":3123123214}', '{\"user_middleName\":\"Pavillon\",\"user_contactInformation\":\"09562184010\"}', '2026-01-18 02:06:38'),
+(0x36633835343132322d663431312d3131, '6', 'CREATE', 'users', '8', NULL, '{\"name\":\"Uno Tarun\",\"role\":\"admin\",\"email\":\"unotarun@gmail.com\",\"qc_id\":\"13285297641\"}', '2026-01-18 02:00:12'),
+(0x37663531613732652d663430612d3131, '6', 'DEACTIVATE', 'users', '7', '{\"user_status\":\"active\"}', '{\"user_status\":\"inactive\"}', '2026-01-18 01:10:37'),
+(0x61643135643733662d663431322d3131, '6', 'CREATE', 'users', '9', NULL, '{\"name\":\"Alexander Deguzman\",\"role\":\"admin\",\"email\":\"Alex@gmail.com\",\"qc_id\":\"97516143278\"}', '2026-01-18 02:09:09');
 
 -- --------------------------------------------------------
 
@@ -133,24 +162,25 @@ CREATE TABLE `contractor_table` (
   `Company_Email_Address` varchar(50) NOT NULL,
   `Years_Of_Experience` int(11) NOT NULL,
   `Additional_Notes` varchar(250) NOT NULL,
-  `Created_At` date NOT NULL DEFAULT current_timestamp()
+  `Created_At` date NOT NULL DEFAULT current_timestamp(),
+  `Contractor_Status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `contractor_table`
 --
 
-INSERT INTO `contractor_table` (`Contractor_Id`, `Contractor_Logo_Path`, `Contractor_Name`, `Owner_Name`, `Company_Address`, `Contact_Number`, `Company_Email_Address`, `Years_Of_Experience`, `Additional_Notes`, `Created_At`) VALUES
-(10, '/QTrace-Website/uploads/contractors/logos/BrightBuild_Construction_Co__logo.jpg', 'BrightBuild Construction Co.', 'Engr. Marco Dela Cruz', '1186 Quezon Avenue, Diliman, Quezon City 1101', 9172458831, 'marcodelacruz@brightbuild.ph', 12, '', '2026-01-15'),
-(11, '/QTrace-Website/uploads/contractors/logos/Apex_Infrastructure_Solutions_logo.jpg', 'Apex Infrastructure Solutions', 'Liza R. Santos', '16 P. Tuazon Blvd, Barangay Kaunlaran, Quezon City 1111', 9281107742, 'liza.santos@apexinfra.ph', 12, '', '2026-01-15'),
-(12, '/QTrace-Website/uploads/contractors/logos/GreenLine_Engineering_Services_logo.jpg', 'GreenLine Engineering Services', 'Engr. Paolo Ramirez', '224 Don C. Manuel Avenue, Quezon City 1115', 9954821160, 'pramirez@greenline.ph', 10, '', '2026-01-15'),
-(13, '/QTrace-Website/uploads/contractors/logos/SolidRock_Builders_logo.jpg', 'SolidRock Builders', 'Victor M. Tan', '239 Kanlaon Avenue, Quezon City 1114', 9167742309, 'victortan@solidrock.ph', 3, '', '2026-01-15'),
-(14, '/QTrace-Website/uploads/contractors/logos/UrbanWorks_Development_Corp__logo.jpg', 'UrbanWorks Development Corp.', 'Carla Joy Mendoza', '28 Kamuning Road, Quezon City 1103', 9305569912, 'carla.mendoza@urbanworks.ph', 20, '', '2026-01-15'),
-(15, '/QTrace-Website/uploads/contractors/logos/Horizon_Roadworks_Ltd__logo.jpg', 'Horizon Roadworks Ltd.', 'Engr. Dennis Villanueva', '67 Timog Avenue, South Triangle, Quezon City 1103', 9472225084, 'dvillanueva@horizonworks.ph', 33, '', '2026-01-15'),
-(16, '/QTrace-Website/uploads/contractors/logos/Ironclad_Structures_Inc__logo.jpg', 'Ironclad Structures Inc.', 'Engr. Jonathan Cruz', 'Del Monte Avenue, Quezon City 1105', 9926641188, 'jcruz@ironclad.ph', 56, '', '2026-01-15'),
-(17, '/QTrace-Website/uploads/contractors/logos/EcoCore_Civil_Engineering_logo.jpg', 'EcoCore Civil Engineering', 'Melissa A. Navarro', 'Agham Road, Quezon City 1103', 9667754203, 'mnavarro@ecocore.ph', 67, '', '2026-01-15'),
-(18, '/QTrace-Website/uploads/contractors/logos/BlueHammer_Construction_logo.jpg', 'BlueHammer Construction', 'Roberto Lim', 'Mayon Avenue corner Calamba Street, San Isidro Labrador, Quezon City 1125', 9213806675, 'rlim@bluehammer.ph', 73, '', '2026-01-15'),
-(19, '/QTrace-Website/uploads/contractors/logos/PrimeAxis_Contractors_logo.jpg', 'PrimeAxis Contractors', 'Angela T. Flores', 'Banawe Avenue, Quezon City 1105', 9184497311, 'angela.flores@primeaxis.ph', 45, '', '2026-01-15');
+INSERT INTO `contractor_table` (`Contractor_Id`, `Contractor_Logo_Path`, `Contractor_Name`, `Owner_Name`, `Company_Address`, `Contact_Number`, `Company_Email_Address`, `Years_Of_Experience`, `Additional_Notes`, `Created_At`, `Contractor_Status`) VALUES
+(10, '/QTrace-Website/uploads/contractors/logos/BrightBuild_Construction_Co__logo.jpg', 'BrightBuild Construction Co.', 'Engr. Marco Dela Cruz', '1186 Quezon Avenue, Diliman, Quezon City 1101', 9172458831, 'marcodelacruz@brightbuild.ph', 12, '', '2026-01-15', ''),
+(11, '/QTrace-Website/uploads/contractors/logos/Apex_Infrastructure_Solutions_logo.jpg', 'Apex Infrastructure Solutions', 'Liza R. Santos', '16 P. Tuazon Blvd, Barangay Kaunlaran, Quezon City 1111', 9281107742, 'liza.santos@apexinfra.ph', 12, '', '2026-01-15', ''),
+(12, '/QTrace-Website/uploads/contractors/logos/GreenLine_Engineering_Services_logo.jpg', 'GreenLine Engineering Services', 'Engr. Paolo Ramirez', '224 Don C. Manuel Avenue, Quezon City 1115', 9954821160, 'pramirez@greenline.ph', 10, '', '2026-01-15', ''),
+(13, '/QTrace-Website/uploads/contractors/logos/SolidRock_Builders_logo.jpg', 'SolidRock Builders', 'Victor M. Tan', '239 Kanlaon Avenue, Quezon City 1114', 9167742309, 'victortan@solidrock.ph', 3, '', '2026-01-15', ''),
+(14, '/QTrace-Website/uploads/contractors/logos/UrbanWorks_Development_Corp__logo.jpg', 'UrbanWorks Development Corp.', 'Carla Joy Mendoza', '28 Kamuning Road, Quezon City 1103', 9305569912, 'carla.mendoza@urbanworks.ph', 20, '', '2026-01-15', ''),
+(15, '/QTrace-Website/uploads/contractors/logos/Horizon_Roadworks_Ltd__logo.jpg', 'Horizon Roadworks Ltd.', 'Engr. Dennis Villanueva', '67 Timog Avenue, South Triangle, Quezon City 1103', 9472225084, 'dvillanueva@horizonworks.ph', 33, '', '2026-01-15', ''),
+(16, '/QTrace-Website/uploads/contractors/logos/Ironclad_Structures_Inc__logo.jpg', 'Ironclad Structures Inc.', 'Engr. Jonathan Cruz', 'Del Monte Avenue, Quezon City 1105', 9926641188, 'jcruz@ironclad.ph', 56, '', '2026-01-15', ''),
+(17, '/QTrace-Website/uploads/contractors/logos/EcoCore_Civil_Engineering_logo.jpg', 'EcoCore Civil Engineering', 'Melissa A. Navarro', 'Agham Road, Quezon City 1103', 9667754203, 'mnavarro@ecocore.ph', 67, '', '2026-01-15', ''),
+(18, '/QTrace-Website/uploads/contractors/logos/BlueHammer_Construction_logo.jpg', 'BlueHammer Construction', 'Roberto Lim', 'Mayon Avenue corner Calamba Street, San Isidro Labrador, Quezon City 1125', 9213806675, 'rlim@bluehammer.ph', 73, '', '2026-01-15', ''),
+(19, '/QTrace-Website/uploads/contractors/logos/PrimeAxis_Contractors_logo.jpg', 'PrimeAxis Contractors', 'Angela T. Flores', 'Banawe Avenue, Quezon City 1105', 9184497311, 'angela.flores@primeaxis.ph', 45, '', '2026-01-15', '');
 
 -- --------------------------------------------------------
 
@@ -302,6 +332,7 @@ CREATE TABLE `user_table` (
   `user_sex` enum('female','male','other') NOT NULL,
   `user_contactInformation` bigint(20) NOT NULL,
   `user_address` varchar(100) NOT NULL,
+  `user_status` varchar(50) NOT NULL,
   `created_At` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -309,9 +340,11 @@ CREATE TABLE `user_table` (
 -- Dumping data for table `user_table`
 --
 
-INSERT INTO `user_table` (`user_ID`, `QC_ID_Number`, `user_lastName`, `user_firstName`, `user_middleName`, `user_Email`, `user_Password`, `user_Role`, `user_birthDate`, `user_sex`, `user_contactInformation`, `user_address`, `created_At`) VALUES
-(6, '74373497704', 'Manongdo', 'Gerald', 'P.', 'ipoglang@gmail.com', '$2y$10$ABJV3LTejJGIWKXjcUeS2eUr5/C6P0GzzkCkHWT15Vgyc7y7ThXJe', 'admin', '2005-09-12', 'male', 3123123214, 'blk 51 lt 49 noche buena st. ', '2026-01-11'),
-(7, '97192855754', 'Tan', 'Kurt', 'Clet', 'KurtTan@gmail.com', '$2y$10$5x4VPncdSUs9Wg81LIVcbOlcXAsnik7C7ESH5OiSbyyr1UREM56EG', 'citizen', '2006-03-10', 'female', 43243432, '123', '2026-01-11');
+INSERT INTO `user_table` (`user_ID`, `QC_ID_Number`, `user_lastName`, `user_firstName`, `user_middleName`, `user_Email`, `user_Password`, `user_Role`, `user_birthDate`, `user_sex`, `user_contactInformation`, `user_address`, `user_status`, `created_At`) VALUES
+(6, '74373497704', 'Manongdo', 'Gerald', 'Pavillon', 'ipoglang@gmail.com', '$2y$10$ABJV3LTejJGIWKXjcUeS2eUr5/C6P0GzzkCkHWT15Vgyc7y7ThXJe', 'admin', '2005-09-12', 'other', 9562184010, 'blk 51 lt 49 noche buena st. ', 'active', '2026-01-11'),
+(7, '97192855754', 'Tan', 'Kurt', 'Clet', 'KurtTan@gmail.com', '$2y$10$5x4VPncdSUs9Wg81LIVcbOlcXAsnik7C7ESH5OiSbyyr1UREM56EG', 'citizen', '2006-03-10', 'female', 43243432, '123', 'inactive', '2026-01-11'),
+(8, '13285297641', 'Tarun', 'Dos', 'Hambala', 'unotarun@gmail.com', '$2y$10$EvF/NUVDM/.bTMFqifk7XOIKxLQgIsoTCXXu638sJianBQBIcy3hS', 'admin', '2006-08-31', 'male', 817398719824, '78c atherton st.', 'active', '2026-01-18'),
+(9, '97516143278', 'Deguzman', 'Alexander', '', 'Alex@gmail.com', '$2y$10$ywLmsIXJnAuNf3JGK5FsFuZ0nKh352Ys9RG0x6trvnKgUDxOw4JCK', 'admin', '2005-11-04', 'male', 84579432, 'blk 51 lt 49 noche buena st. ', 'active', '2026-01-18');
 
 --
 -- Indexes for dumped tables
@@ -326,6 +359,12 @@ ALTER TABLE `articles_table`
   ADD KEY `idx_project` (`Project_ID`),
   ADD KEY `idx_status` (`article_status`),
   ADD KEY `idx_created` (`article_created_at`);
+
+--
+-- Indexes for table `audit_logs`
+--
+ALTER TABLE `audit_logs`
+  ADD PRIMARY KEY (`audit_log_id`);
 
 --
 -- Indexes for table `contractor_documents_table`
@@ -462,7 +501,7 @@ ALTER TABLE `report_table`
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

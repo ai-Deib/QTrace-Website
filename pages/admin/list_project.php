@@ -58,9 +58,10 @@
                                         <label for="statusFilter" class="form-label fw-bold text-muted">Status</label>
                                         <select class="form-select" id="statusFilter" name="status">
                                             <option value="">All Status</option>
-                                            <option value="active" <?php echo ($_GET['status'] ?? '') === 'active' ? 'selected' : ''; ?>>Active</option>
-                                            <option value="completed" <?php echo ($_GET['status'] ?? '') === 'completed' ? 'selected' : ''; ?>>Completed</option>
-                                            <option value="planned" <?php echo ($_GET['status'] ?? '') === 'planned' ? 'selected' : ''; ?>>Planned</option>
+                                            <option value="Planning" <?php echo ($_GET['status'] ?? '') === 'Planning' ? 'selected' : ''; ?>>Planning</option>
+                                            <option value="Ongoing" <?php echo ($_GET['status'] ?? '') === 'Ongoing' ? 'selected' : ''; ?>>Ongoing</option>
+                                            <option value="Completed" <?php echo ($_GET['status'] ?? '') === 'Completed' ? 'selected' : ''; ?>>Completed</option>
+                                            <option value="Delayed" <?php echo ($_GET['status'] ?? '') === 'Delayed' ? 'selected' : ''; ?>>Delayed</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -116,7 +117,7 @@
                                                         if($row['Project_Status'] == 'Planning') $statusClass = 'bg-info text-dark';
                                                     ?>
                                                     <span class="badge rounded-pill <?= $statusClass ?>">
-                                                        ● <?= htmlspecialchars($row['Project_Status']) ?>
+                                                        <?= htmlspecialchars($row['Project_Status']) ?>
                                                     </span>
                                                 </td>
 
@@ -183,8 +184,10 @@
                 </main>
             </div>
         </div>
+        <?php include('../../components/toast.php'); ?>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/QTrace-Website/assets/js/toast.js"></script>
         <script>
             function confirmDisable(id) {
                 if (confirm('Are you sure you want to disable this project? It will be hidden from public view.')) {

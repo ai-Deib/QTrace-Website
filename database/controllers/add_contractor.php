@@ -94,7 +94,8 @@ if (!empty($_POST['expertise']) && is_array($_POST['expertise'])) {
         }
 
         $conn->commit();
-        header("Location: /QTrace-Website/contractor-list"); // Redirect after success
+        $msg = urlencode("Contractor added successfully.");
+        header("Location: /QTrace-Website/contractor-list?status=success&msg=$msg"); // Redirect after success
         exit();
 
     } catch (Exception $e) {

@@ -125,7 +125,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="/QTrace-Website/history" class="nav-link text-black <?php echo ($page_name == 'history') ? 'active' : ''; ?>">
+            <a href="/QTrace-Website/audit-list" class="nav-link text-black <?php echo ($page_name == 'audit') ? 'active' : ''; ?>">
                 <i class="bi bi-archive"></i> Audit Logs
             </a>
         </li>

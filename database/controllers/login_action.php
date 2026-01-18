@@ -26,35 +26,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($result->num_rows === 1) {
             $account = $result->fetch_assoc();
+            if($account['user_status'] == "active"){
+                // 3. Verify the hashed password
+                if (password_verify($pass, $account['user_Password'])) {
+                    
+                    // Security: Prevent session fixation
+                    session_regenerate_id(true);
+                    
+                    // Store session data
+                    $_SESSION['user_ID'] = $account['user_ID'];
+                    $_SESSION['role'] = $account['user_Role'];
+                    
+                    // Initialize the 5-minute timer
+                    $_SESSION['last_activity'] = time();
 
-            // 3. Verify the hashed password
-            if (password_verify($pass, $account['user_Password'])) {
-                
-                // Security: Prevent session fixation
-                session_regenerate_id(true);
-                
-                // Store session data
-                $_SESSION['user_ID'] = $account['user_ID'];
-                $_SESSION['role'] = $account['user_Role'];
-                
-                // Initialize the 5-minute timer
-                $_SESSION['last_activity'] = time();
-
-                // Redirect based on role or to a general dashboard
-                if($account['user_Role'] == 'admin')
-                {
-                    header("Location: /QTrace-Website/dashboard");
-                    exit();
-                }else{
-                    header("Location: /QTrace-Website/home?role={$_SESSION['role']}");
+                    // Redirect based on role or to a general dashboard
+                    if($account['user_Role'] == 'admin')
+                    {
+                        header("Location: /QTrace-Website/dashboard");
+                        exit();
+                    }else{
+                        header("Location: /QTrace-Website/home?role={$_SESSION['role']}");
+                        exit();
+                    }
+                } else {
+                    // Password incorrect
+                    $_SESSION['error'] = "Invalid email or password.";
+                    header("Location: /QTrace-Website/login?error=invalid_credentials");
                     exit();
                 }
-            } else {
-                // Password incorrect
-                $_SESSION['error'] = "Invalid email or password.";
-                header("Location: /QTrace-Website/login?error=invalid_credentials");
+            }else{
+                // Account is inactive
+                $_SESSION['error'] = "Your account is inactive. Please contact support.";
+                header("Location: /QTrace-Website/login?error=inactive_account");
                 exit();
             }
+
+            
         } else {
             // User ID not found
             $_SESSION['error'] = "Invalid email or password.";

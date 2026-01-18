@@ -120,7 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Commit all changes if everything is successful
         $conn->commit();
-        header("Location: /QTrace-Website/project-list?msg=added");
+        $msg = urlencode("Project added successfully.");
+        header("Location: /QTrace-Website/project-list?status=success&msg=$msg");
         exit();
 
     } catch (Exception $e) {

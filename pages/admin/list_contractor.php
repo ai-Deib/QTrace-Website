@@ -69,7 +69,7 @@
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body">
                                 <form method="GET" class="row g-3">
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-6">
                                         <label class="form-label fw-bold text-muted">Filter by Skill</label>
                                         <input type="text" name="skill" class="form-control" placeholder="e.g. Plumbing, Electrical" value="<?= $search_skill ?>">
                                     </div>
@@ -77,12 +77,12 @@
                                         <label class="form-label fw-bold text-muted">Min. Experience (Years)</label>
                                         <input type="number" name="min_years" class="form-control" placeholder="0" min="0" value="<?= $min_years > 0 ? $min_years : '' ?>">
                                     </div>
-                                    <div class="col-lg-3 d-flex align-items-end row g-2">
+                                    <div class="col-lg-2 d-flex align-items-end row g-2">
                                         <div class="col-6">
                                             <button class="btn bg-color-primary text-light fw-medium w-100" type="submit">Apply</button>
                                         </div>
                                         <div class="col-6">
-                                            <button type="?page=1" class="btn btn-outline-secondary w-100 fw-medium">Reset</button>
+                                            <button type="button" onclick="window.location.href='?page=1'" class="btn btn-outline-secondary w-100 fw-medium">Reset</button>
                                         </div>
                                             
                                     </div>
@@ -154,6 +154,7 @@
                 </div>
             </main>
         </div>
+        <?php include('../../components/toast.php'); ?>
 
         <!-- Custome Script For This Page Only  --> 
         <script>
@@ -166,6 +167,7 @@
          
         <!-- Reusable Script -->
         <script src="/QTrace-Website/assets/js/mouseMovement.js"></script>
+        <script src="/QTrace-Website/assets/js/toast.js"></script>
 
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

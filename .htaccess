@@ -27,11 +27,15 @@ RewriteRule ^add-article$ pages/admin/add_article.php [NC,L]
 
 RewriteRule ^add-account$ pages/admin/add_account.php [NC,L]
 RewriteRule ^account-list$ pages/admin/list_account.php [NC,L]
+RewriteRule ^edit-account$ pages/admin/edit_account.php [NC,L]
+RewriteRule ^view-account$ pages/admin/view_account.php [NC,L]
 
 RewriteRule ^login$ pages/admin/login.php [NC,L]
 RewriteRule ^logout$ database/controllers/logout.php [NC,L]
 
 RewriteRule ^view-project$ pages/admin/view_project.php [NC,L]
+
+RewriteRule ^audit-list$ pages/admin/list_audit.php [NC,L]
 
 
 #For Public pages
