@@ -33,7 +33,6 @@ $featured_query = "
     INNER JOIN projects_table pt ON a.Project_ID = pt.Project_ID
     INNER JOIN projectdetails_table pd ON pt.Project_ID = pd.Project_ID
     LEFT JOIN user_table u ON a.user_ID = u.user_id
-    WHERE a.article_status = 'Published'
     ORDER BY a.article_created_at DESC
     LIMIT 1
 ";
@@ -45,11 +44,12 @@ $featured_article = $featured_result ? $featured_result->fetch_assoc() : null;
 $count_query = "
     SELECT COUNT(a.article_ID) as total
     FROM articles_table a
-    WHERE a.article_status = 'Published'
+    INNER JOIN projects_table pt ON a.Project_ID = pt.Project_ID
+    INNER JOIN projectdetails_table pd ON pt.Project_ID = pd.Project_ID
 ";
 
 if ($featured_article) {
-    $count_query .= " AND a.article_ID != " . intval($featured_article['article_ID']);
+    $count_query .= " WHERE a.article_ID != " . intval($featured_article['article_ID']);
 }
 
 $count_result = $conn->query($count_query);
@@ -76,7 +76,7 @@ $articles_query = "
     INNER JOIN projects_table pt ON a.Project_ID = pt.Project_ID
     INNER JOIN projectdetails_table pd ON pt.Project_ID = pd.Project_ID
     LEFT JOIN user_table u ON a.user_ID = u.user_id
-    WHERE a.article_status = 'Published'
+    WHERE 1=1
 ";
 
 if ($featured_article) {

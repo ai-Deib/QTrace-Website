@@ -95,10 +95,23 @@
                                     <span class="text-muted small">Combined updates and articles across projects</span>
                                 </div>
 
-                                <?php if ($articles_result && $articles_result->num_rows > 0): ?>
+                                <?php 
+                                // Combine featured and regular articles
+                                $all_articles = [];
+                                if ($featured_article) {
+                                    $all_articles[] = $featured_article;
+                                }
+                                if ($articles_result && $articles_result->num_rows > 0) {
+                                    while($article = $articles_result->fetch_assoc()) {
+                                        $all_articles[] = $article;
+                                    }
+                                }
+                                ?>
+
+                                <?php if (count($all_articles) > 0): ?>
                                     <?php 
                                     $first = true;
-                                    while($article = $articles_result->fetch_assoc()): 
+                                    foreach($all_articles as $article): 
                                         if ($first): 
                                             $first = false;
                                     ?>
@@ -156,7 +169,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php endif; endwhile; ?>
+                                    <?php endif; endforeach; ?>
                                     </div>
                                 <?php else: ?>
                                     <div class="text-center py-5">
