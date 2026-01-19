@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require('../../database/connection/connection.php');
+require('audit_service.php');
 
 // Handle both GET and POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,6 +62,7 @@ if (!isset($_SESSION['user_ID'])) {
     exit();
 }
 
+// Verify article exists
 $article_check = $conn->query("SELECT article_ID FROM articles_table WHERE article_ID = $article_id");
 if (!$article_check || $article_check->num_rows === 0) {
     $_SESSION['error'] = 'Article not found.';
@@ -68,14 +70,24 @@ if (!$article_check || $article_check->num_rows === 0) {
     exit();
 }
 
+// Delete the article
 $delete_sql = "DELETE FROM articles_table WHERE article_ID = $article_id";
 
-if ($conn->query($delete_sql) === TRUE) {
-    $_SESSION['success_message'] = 'Article deleted successfully!';
+if ($conn->query($update_sql) === TRUE) {
+    // Log the action to audit trail
+    $auditService = new AuditService($conn);
+    $userId = $_SESSION['user_ID'] ?? null;
+    
+    $oldVals = ['article_status' => $oldStatus];
+    $newVals = ['article_status' => 'Draft'];
+    
+    $auditService->log($userId, 'UPDATE', 'Article', $article_id, $oldVals, $newVals);
+    
+    $_SESSION['success_message'] = 'Article moved to Draft successfully!';
     header('Location: /QTrace-Website/project-articles');
     exit();
 } else {
-    $_SESSION['error'] = 'Error deleting article: ' . $conn->error;
+    $_SESSION['error'] = 'Error updating article: ' . $conn->error;
     error_log('Database error: ' . $conn->error);
     header('Location: /QTrace-Website/project-articles');
     exit();
