@@ -90,30 +90,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // --- STEP 4: Handle Milestone Gallery (projectmilestone_table) ---
-        if (!empty($_FILES['img_files']['name'][0])) {
-            $imgDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/projects/milestones/";
-            if (!is_dir($imgDir)) mkdir($imgDir, 0777, true);
+        $imgTypes = $_POST['img_types'] ?? [];
+        $imgUrls  = $_POST['img_urls'] ?? [];
+        $imgFiles = $_FILES['img_files'] ?? ['name' => [], 'tmp_name' => [], 'error' => []];
 
+        if (!empty($imgTypes)) {
+            $imgDir = $_SERVER['DOCUMENT_ROOT'] . "/QTrace-Website/uploads/projects/milestones/";
             $stmtMilestone = $conn->prepare("INSERT INTO projectmilestone_table (
                                                 Project_ID, 
                                                 projectMilestone_Image_Path, 
                                                 projectMilestone_Phase
                                                 ) VALUES (?, ?, ?)");
 
-            foreach ($_FILES['img_files']['name'] as $key => $val) {
-                if ($_FILES['img_files']['error'][$key] == 0) {
-                    $phase   = $_POST['img_types'][$key];
-                    $tmpPath = $_FILES['img_files']['tmp_name'][$key];
-                    $ext     = pathinfo($val, PATHINFO_EXTENSION);
-                    
+            foreach ($imgTypes as $key => $phaseRaw) {
+                $phase = $conn->real_escape_string($phaseRaw);
+                $webPath = null;
+
+                $hasFile = isset($imgFiles['error'][$key]) && $imgFiles['error'][$key] == 0 && !empty($imgFiles['tmp_name'][$key]);
+                $urlInput = trim($imgUrls[$key] ?? '');
+                $hasUrl = $urlInput && filter_var($urlInput, FILTER_VALIDATE_URL);
+
+                if ($hasFile) {
+                    if (!is_dir($imgDir)) mkdir($imgDir, 0777, true);
+                    $val = $imgFiles['name'][$key];
+                    $tmpPath = $imgFiles['tmp_name'][$key];
+                    $ext = pathinfo($val, PATHINFO_EXTENSION);
+
                     $filename = "IMG_" . $project_id . "_" . time() . "_" . $key . "." . $ext;
                     $serverPath = $imgDir . $filename;
                     $webPath = "/QTrace-Website/uploads/projects/milestones/" . $filename;
 
-                    if (move_uploaded_file($tmpPath, $serverPath)) {
-                        $stmtMilestone->bind_param("iss", $project_id, $webPath, $phase);
-                        $stmtMilestone->execute();
+                    if (!move_uploaded_file($tmpPath, $serverPath)) {
+                        $webPath = null;
                     }
+                } elseif ($hasUrl) {
+                    $webPath = $urlInput;
+                }
+
+                if ($webPath) {
+                    $stmtMilestone->bind_param("iss", $project_id, $webPath, $phase);
+                    $stmtMilestone->execute();
                 }
             }
         }

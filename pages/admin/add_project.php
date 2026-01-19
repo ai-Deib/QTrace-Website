@@ -285,7 +285,15 @@ if ($contractorStmt) {
                                     <option value="inspection">Inspection</option>
                                 </select>
                             </div>
+                        <div class="row g-2 align-items-center">
+                          <div class="col-12 col-md-6">
                             <input type="file" name="img_files[]" class="form-control form-control-sm img-input" accept="image/*" required>
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <input type="url" name="img_urls[]" class="form-control form-control-sm img-url-input" placeholder="or paste image URL">
+                          </div>
+                        </div>
+                        <small class="text-muted">Upload a file or provide a URL.</small>
                             <button class="btn btn-danger btn-sm remove-img-btn remove-btn" type="button"><i class="bi bi-x-lg"></i></button>
                         </div>
                     </div>
